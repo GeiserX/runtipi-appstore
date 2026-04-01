@@ -1,0 +1,21 @@
+services:
+  jellyfin-encoder:
+    image: drumsergio/jellyfin-encoder:0.0.22
+    container_name: jellyfin-encoder
+    restart: unless-stopped
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - ${APP_DATA_DIR}/data/source:/app/source
+      - ${APP_DATA_DIR}/data/destination:/app/destination
+    environment:
+      ENABLE_HW_ACCEL: "true"
+      HW_ENCODING_TYPE: ${HW_ENCODING_TYPE:-intel}
+      ENCODING_QUALITY: ${ENCODING_QUALITY:-LOW}
+      SOURCE_FOLDER: /app/source
+      DEST_FOLDER: /app/destination
+      ENCODING_CODEC: ${ENCODING_CODEC:-hevc}
+    networks:
+      - tipi_main_network
+    labels:
+      runtipi.managed: true

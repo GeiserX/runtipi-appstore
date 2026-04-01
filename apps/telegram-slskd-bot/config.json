@@ -1,0 +1,66 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Telegram Soulseek Bot",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8516,
+  "id": "telegram-slskd-bot",
+  "tipi_version": 1,
+  "version": "0.8.2",
+  "categories": [
+    "media",
+    "music"
+  ],
+  "description": "Automated music discovery and download via Telegram bot. Resolves metadata from Spotify, searches and downloads FLAC from Soulseek (via slskd), and organizes your library. Features auto-mode for hands-free operation, configurable search filters, and smart file naming.",
+  "short_desc": "Automated music discovery and FLAC downloads via Telegram.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/telegram-slskd-local-bot",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Telegram Bot Token",
+      "env_variable": "TELEGRAM_BOT_TOKEN",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Spotify Client ID",
+      "env_variable": "SPOTIFY_CLIENT_ID",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Spotify Client Secret",
+      "env_variable": "SPOTIFY_CLIENT_SECRET",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "slskd Host URL",
+      "env_variable": "SLSKD_HOST",
+      "required": true,
+      "hint": "e.g. http://slskd:5030"
+    },
+    {
+      "type": "password",
+      "label": "slskd API Key",
+      "env_variable": "SLSKD_API_KEY",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Allowed Telegram User IDs",
+      "env_variable": "TELEGRAM_ALLOWED_USERS",
+      "required": false
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "no_gui": true
+}

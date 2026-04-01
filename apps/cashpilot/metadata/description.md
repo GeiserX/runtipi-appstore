@@ -1,0 +1,1 @@
+CashPilot is a self-hosted passive income orchestrator. Deploy once, earn everywhere. The web UI guides you through setting up bandwidth sharing services (Honeygain, EarnApp, Mysterium, etc.), deploys containers automatically, and tracks your earnings across all services and servers. Includes multi-server fleet management.

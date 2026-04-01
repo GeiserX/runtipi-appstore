@@ -1,0 +1,26 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "ePub Language Merger",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8523,
+  "id": "epublangmerger",
+  "tipi_version": 1,
+  "version": "1.0.1",
+  "categories": [
+    "books"
+  ],
+  "description": "Merge two ePub files in different languages into a single bilingual ebook for parallel reading. Upload two ePubs, select chapter alignment, and download a merged bilingual book. Built with R Shiny for an interactive web interface. Perfect for language learners.",
+  "short_desc": "Merge two ePub files into a single bilingual ebook for parallel reading.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/ePubLangMerger",
+  "form_fields": [],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0"
+}

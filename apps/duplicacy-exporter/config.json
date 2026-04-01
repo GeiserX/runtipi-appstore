@@ -1,0 +1,37 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Duplicacy Exporter",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8524,
+  "id": "duplicacy-exporter",
+  "tipi_version": 1,
+  "version": "0.3.3",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "description": "Real-time Prometheus exporter for Duplicacy backups with live speed, progress, and completion metrics. Supports log tailing mode (Docker socket) and webhook mode (Duplicacy Web UI). Perfect for Grafana dashboards monitoring your backup health.",
+  "short_desc": "Real-time Prometheus exporter for Duplicacy backup monitoring.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/duplicacy-exporter",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Docker Container Name",
+      "env_variable": "DOCKER_CONTAINER_NAME",
+      "required": false,
+      "default": "duplicacy-cli-cron",
+      "hint": "Container whose logs to tail"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "no_gui": true
+}

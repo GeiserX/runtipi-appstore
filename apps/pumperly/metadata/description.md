@@ -1,0 +1,1 @@
+Pumperly combines route planning with real-time fuel prices and EV charging station data across 36 countries. Plan routes from A to B, see fuel stations and EV chargers along your corridor, and filter by 'cheapest within N minutes detour'. Covers Europe, Latin America, and Oceania with 16 languages. Uses PostGIS, Valhalla routing, and Photon geocoding.

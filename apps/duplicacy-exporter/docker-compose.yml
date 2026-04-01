@@ -1,0 +1,18 @@
+services:
+  duplicacy-exporter:
+    image: drumsergio/duplicacy-exporter:0.3.3
+    container_name: duplicacy-exporter
+    restart: unless-stopped
+    environment:
+      MODE: log_tail
+      DOCKER_CONTAINER_NAME: ${DOCKER_CONTAINER_NAME:-duplicacy-cli-cron}
+      LISTEN_PORT: "9750"
+      LOG_LEVEL: INFO
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - ${APP_PORT}:9750
+    networks:
+      - tipi_main_network
+    labels:
+      runtipi.managed: true

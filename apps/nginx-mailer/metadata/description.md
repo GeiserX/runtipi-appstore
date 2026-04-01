@@ -1,0 +1,1 @@
+A lightweight Docker image based on nginx:alpine that serves static websites and handles contact form submissions via SMTP. Single container combining nginx and a Go-based API. Features Cloudflare Turnstile CAPTCHA integration. Multi-arch support for amd64 and arm64.

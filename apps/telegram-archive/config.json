@@ -1,0 +1,80 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Telegram Archive",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8510,
+  "id": "telegram-archive",
+  "tipi_version": 1,
+  "version": "7.4.2",
+  "categories": [
+    "social",
+    "utilities"
+  ],
+  "description": "Telegram Archive provides automated, incremental backups of your Telegram chats with a local web viewer that feels just like the real app. Supports SQLite and PostgreSQL, real-time message listening, media downloads, chat filtering, authentication, and public chat sharing. Docker-ready with security hardening.",
+  "short_desc": "Own your Telegram history with automated backups and a web viewer.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/Telegram-Archive",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Telegram API ID",
+      "env_variable": "TELEGRAM_API_ID",
+      "required": true,
+      "hint": "Get from my.telegram.org"
+    },
+    {
+      "type": "text",
+      "label": "Telegram API Hash",
+      "env_variable": "TELEGRAM_API_HASH",
+      "required": true,
+      "hint": "Get from my.telegram.org"
+    },
+    {
+      "type": "text",
+      "label": "Telegram Phone Number",
+      "env_variable": "TELEGRAM_PHONE",
+      "required": true,
+      "hint": "International format, e.g. +34612345678"
+    },
+    {
+      "type": "text",
+      "label": "Viewer Username",
+      "env_variable": "VIEWER_USERNAME",
+      "required": false,
+      "default": "admin",
+      "hint": "Username for web viewer access"
+    },
+    {
+      "type": "password",
+      "label": "Viewer Password",
+      "env_variable": "VIEWER_PASSWORD",
+      "required": false,
+      "default": "",
+      "hint": "Password for web viewer access"
+    },
+    {
+      "type": "text",
+      "label": "Backup Schedule (cron)",
+      "env_variable": "SCHEDULE",
+      "required": false,
+      "default": "0 */6 * * *"
+    },
+    {
+      "type": "text",
+      "label": "Chat Types to Backup",
+      "env_variable": "CHAT_TYPES",
+      "required": false,
+      "default": "private,groups,channels"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "website": "https://github.com/GeiserX/Telegram-Archive"
+}

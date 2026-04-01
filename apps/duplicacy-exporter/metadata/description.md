@@ -1,0 +1,1 @@
+Real-time Prometheus exporter for Duplicacy backups with live speed, progress, and completion metrics. Supports log tailing mode (Docker socket) and webhook mode (Duplicacy Web UI). Perfect for Grafana dashboards monitoring your backup health.

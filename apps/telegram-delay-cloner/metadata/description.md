@@ -1,0 +1,1 @@
+A Telegram bot that relays messages between channels with configurable delay and batch processing. Set a source channel, target channel, and delay interval. Messages are queued in a SQLite database and forwarded at the configured pace. Useful for content scheduling and cross-posting.

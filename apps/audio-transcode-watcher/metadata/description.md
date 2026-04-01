@@ -1,0 +1,1 @@
+Automated multi-format audio transcoding service with real-time file watching and lyrics fetching. Drop a FLAC into your source folder and get ALAC, MP3, AAC, and Opus copies instantly. Features synced lyrics via Whisper, artwork preservation, atomic writes, orphan cleanup, and safety guards.

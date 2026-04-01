@@ -1,0 +1,157 @@
+services:
+  lynxprompt-app:
+    image: drumsergio/lynxprompt:2.0.75
+    container_name: lynxprompt-app
+    restart: unless-stopped
+    depends_on:
+      lynxprompt-postgres-app:
+        condition: service_healthy
+      lynxprompt-postgres-users:
+        condition: service_healthy
+      lynxprompt-postgres-blog:
+        condition: service_healthy
+      lynxprompt-postgres-support:
+        condition: service_healthy
+    ports:
+      - ${APP_PORT}:3000
+    networks:
+      - tipi_main_network
+    volumes:
+      - ${APP_DATA_DIR}/data/uploads:/data/uploads
+    environment:
+      DB_APP_HOST: lynxprompt-postgres-app
+      DB_APP_USER: lynxprompt_app
+      DB_APP_PASSWORD: ${POSTGRES_APP_PASSWORD}
+      DB_APP_NAME: lynxprompt_app
+      DB_USERS_HOST: lynxprompt-postgres-users
+      DB_USERS_USER: lynxprompt_users
+      DB_USERS_PASSWORD: ${POSTGRES_USERS_PASSWORD}
+      DB_USERS_NAME: lynxprompt_users
+      DB_BLOG_HOST: lynxprompt-postgres-blog
+      DB_BLOG_USER: lynxprompt_blog
+      DB_BLOG_PASSWORD: ${POSTGRES_BLOG_PASSWORD}
+      DB_BLOG_NAME: lynxprompt_blog
+      DB_SUPPORT_HOST: lynxprompt-postgres-support
+      DB_SUPPORT_USER: lynxprompt_support
+      DB_SUPPORT_PASSWORD: ${POSTGRES_SUPPORT_PASSWORD}
+      DB_SUPPORT_NAME: lynxprompt_support
+      NEXTAUTH_URL: ${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
+      ENABLE_GITHUB_OAUTH: ${GITHUB_CLIENT_ID:+true}
+      ENABLE_EMAIL_AUTH: "true"
+      ENABLE_PASSKEYS: "true"
+      ENABLE_USER_REGISTRATION: "true"
+      APP_NAME: LynxPrompt
+      APP_URL: ${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      NODE_ENV: production
+      SUPERADMIN_EMAIL: ${SUPERADMIN_EMAIL:-}
+      UPLOAD_DIR: /data/uploads/blog
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.lynxprompt-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.lynxprompt.loadbalancer.server.port: 3000
+      traefik.http.routers.lynxprompt-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.lynxprompt-insecure.entrypoints: web
+      traefik.http.routers.lynxprompt-insecure.service: lynxprompt
+      traefik.http.routers.lynxprompt-insecure.middlewares: lynxprompt-web-redirect
+      traefik.http.routers.lynxprompt.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.lynxprompt.entrypoints: websecure
+      traefik.http.routers.lynxprompt.service: lynxprompt
+      traefik.http.routers.lynxprompt.tls.certresolver: myresolver
+      traefik.http.routers.lynxprompt-local-insecure.rule: Host(`lynxprompt.${LOCAL_DOMAIN}`)
+      traefik.http.routers.lynxprompt-local-insecure.entrypoints: web
+      traefik.http.routers.lynxprompt-local-insecure.service: lynxprompt
+      traefik.http.routers.lynxprompt-local-insecure.middlewares: lynxprompt-web-redirect
+      traefik.http.routers.lynxprompt-local.rule: Host(`lynxprompt.${LOCAL_DOMAIN}`)
+      traefik.http.routers.lynxprompt-local.entrypoints: websecure
+      traefik.http.routers.lynxprompt-local.service: lynxprompt
+      traefik.http.routers.lynxprompt-local.tls: true
+      runtipi.managed: true
+
+  lynxprompt-postgres-app:
+    image: postgres:18-alpine
+    container_name: lynxprompt-postgres-app
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lynxprompt_app
+      POSTGRES_USER: lynxprompt_app
+      POSTGRES_PASSWORD: ${POSTGRES_APP_PASSWORD}
+      PGDATA: /data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/data/db-app:/data
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lynxprompt_app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      runtipi.managed: true
+
+  lynxprompt-postgres-users:
+    image: postgres:18-alpine
+    container_name: lynxprompt-postgres-users
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lynxprompt_users
+      POSTGRES_USER: lynxprompt_users
+      POSTGRES_PASSWORD: ${POSTGRES_USERS_PASSWORD}
+      PGDATA: /data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/data/db-users:/data
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lynxprompt_users"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      runtipi.managed: true
+
+  lynxprompt-postgres-blog:
+    image: postgres:18-alpine
+    container_name: lynxprompt-postgres-blog
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lynxprompt_blog
+      POSTGRES_USER: lynxprompt_blog
+      POSTGRES_PASSWORD: ${POSTGRES_BLOG_PASSWORD}
+      PGDATA: /data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/data/db-blog:/data
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lynxprompt_blog"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      runtipi.managed: true
+
+  lynxprompt-postgres-support:
+    image: postgres:18-alpine
+    container_name: lynxprompt-postgres-support
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lynxprompt_support
+      POSTGRES_USER: lynxprompt_support
+      POSTGRES_PASSWORD: ${POSTGRES_SUPPORT_PASSWORD}
+      PGDATA: /data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/data/db-support:/data
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lynxprompt_support"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      runtipi.managed: true

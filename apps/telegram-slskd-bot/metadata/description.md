@@ -1,0 +1,1 @@
+Automated music discovery and download via Telegram bot. Resolves metadata from Spotify, searches and downloads FLAC from Soulseek (via slskd), and organizes your library. Features auto-mode for hands-free operation, configurable search filters, and smart file naming.

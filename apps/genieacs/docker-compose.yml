@@ -1,0 +1,73 @@
+services:
+  genieacs:
+    image: drumsergio/genieacs:1.2.16.0
+    container_name: genieacs
+    restart: unless-stopped
+    depends_on:
+      genieacs-mongo:
+        condition: service_healthy
+    environment:
+      GENIEACS_UI_JWT_SECRET: ${GENIEACS_JWT_SECRET}
+      GENIEACS_CWMP_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-cwmp-access.log
+      GENIEACS_NBI_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-nbi-access.log
+      GENIEACS_FS_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-fs-access.log
+      GENIEACS_UI_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-ui-access.log
+      GENIEACS_DEBUG_FILE: /var/log/genieacs/genieacs-debug.yaml
+      GENIEACS_EXT_DIR: /opt/genieacs/ext
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://genieacs-mongo/genieacs?authSource=admin
+    ports:
+      - ${APP_PORT}:3000
+      - "7547:7547"
+      - "7557:7557"
+      - "7567:7567"
+    volumes:
+      - ${APP_DATA_DIR}/data/ext:/opt/genieacs/ext
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.genieacs-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.genieacs.loadbalancer.server.port: 3000
+      traefik.http.routers.genieacs-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.genieacs-insecure.entrypoints: web
+      traefik.http.routers.genieacs-insecure.service: genieacs
+      traefik.http.routers.genieacs-insecure.middlewares: genieacs-web-redirect
+      traefik.http.routers.genieacs.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.genieacs.entrypoints: websecure
+      traefik.http.routers.genieacs.service: genieacs
+      traefik.http.routers.genieacs.tls.certresolver: myresolver
+      traefik.http.routers.genieacs-local-insecure.rule: Host(`genieacs.${LOCAL_DOMAIN}`)
+      traefik.http.routers.genieacs-local-insecure.entrypoints: web
+      traefik.http.routers.genieacs-local-insecure.service: genieacs
+      traefik.http.routers.genieacs-local-insecure.middlewares: genieacs-web-redirect
+      traefik.http.routers.genieacs-local.rule: Host(`genieacs.${LOCAL_DOMAIN}`)
+      traefik.http.routers.genieacs-local.entrypoints: websecure
+      traefik.http.routers.genieacs-local.service: genieacs
+      traefik.http.routers.genieacs-local.tls: true
+      runtipi.managed: true
+
+  genieacs-mongo:
+    image: mongo:8.0
+    container_name: genieacs-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_DATA_DIR: /data/db
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/data/db
+      - ${APP_DATA_DIR}/data/configdb:/data/configdb
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    labels:
+      runtipi.managed: true

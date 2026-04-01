@@ -1,0 +1,1 @@
+A simple web CMS for editing HTML/CSS files downloaded from the Wayback Archive. Features a file browser, CodeMirror syntax highlighting, search and replace, backup management, multi-tenant mode with SMTP magic links, and Docker support. Perfect for maintaining and editing archived websites.

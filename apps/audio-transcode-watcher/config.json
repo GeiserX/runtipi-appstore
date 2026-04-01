@@ -1,0 +1,28 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Audio Transcode Watcher",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8520,
+  "id": "audio-transcode-watcher",
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": [
+    "media",
+    "music"
+  ],
+  "description": "Automated multi-format audio transcoding service with real-time file watching and lyrics fetching. Drop a FLAC into your source folder and get ALAC, MP3, AAC, and Opus copies instantly. Features synced lyrics via Whisper, artwork preservation, atomic writes, orphan cleanup, and safety guards.",
+  "short_desc": "Automated multi-format audio transcoding with real-time file watching.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/audio-transcode-watcher",
+  "form_fields": [],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "no_gui": true
+}

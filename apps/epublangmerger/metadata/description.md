@@ -1,0 +1,1 @@
+Merge two ePub files in different languages into a single bilingual ebook for parallel reading. Upload two ePubs, select chapter alignment, and download a merged bilingual book. Built with R Shiny for an interactive web interface. Perfect for language learners.

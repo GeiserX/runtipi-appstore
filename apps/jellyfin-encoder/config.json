@@ -1,0 +1,52 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Jellyfin Encoder",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8519,
+  "id": "jellyfin-encoder",
+  "tipi_version": 1,
+  "version": "0.0.22",
+  "categories": [
+    "media"
+  ],
+  "description": "Automatic video transcoding service for Jellyfin libraries. Transcodes media to 720p HEVC or AV1 with NVIDIA and Intel hardware acceleration support. Watches source folders and outputs optimized files. Configurable encoding quality, codec selection, and GPU support.",
+  "short_desc": "Automatic 720p HEVC/AV1 transcoding for Jellyfin with hardware acceleration.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/jellyfin-encoder",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Hardware Encoding Type",
+      "env_variable": "HW_ENCODING_TYPE",
+      "required": false,
+      "default": "intel",
+      "hint": "intel or nvidia"
+    },
+    {
+      "type": "text",
+      "label": "Encoding Codec",
+      "env_variable": "ENCODING_CODEC",
+      "required": false,
+      "default": "hevc",
+      "hint": "hevc or av1"
+    },
+    {
+      "type": "text",
+      "label": "Encoding Quality",
+      "env_variable": "ENCODING_QUALITY",
+      "required": false,
+      "default": "LOW",
+      "hint": "LOW, MEDIUM, or HIGH"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "no_gui": true
+}

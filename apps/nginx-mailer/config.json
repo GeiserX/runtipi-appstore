@@ -1,0 +1,66 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Nginx Mailer",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8521,
+  "id": "nginx-mailer",
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": [
+    "utilities",
+    "network"
+  ],
+  "description": "A lightweight Docker image based on nginx:alpine that serves static websites and handles contact form submissions via SMTP. Single container combining nginx and a Go-based API. Features Cloudflare Turnstile CAPTCHA integration. Multi-arch support for amd64 and arm64.",
+  "short_desc": "Lightweight nginx with built-in contact form API and SMTP support.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/nginx-mailer",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "SMTP Host",
+      "env_variable": "SMTP_HOST",
+      "required": true
+    },
+    {
+      "type": "number",
+      "label": "SMTP Port",
+      "env_variable": "SMTP_PORT",
+      "required": false,
+      "default": 465
+    },
+    {
+      "type": "text",
+      "label": "SMTP User",
+      "env_variable": "SMTP_USER",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "SMTP Password",
+      "env_variable": "SMTP_PASSWORD",
+      "required": true
+    },
+    {
+      "type": "email",
+      "label": "SMTP From Address",
+      "env_variable": "SMTP_FROM",
+      "required": true
+    },
+    {
+      "type": "email",
+      "label": "Contact Email",
+      "env_variable": "CONTACT_EMAIL",
+      "required": true,
+      "hint": "Where to receive form submissions"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0"
+}

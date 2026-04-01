@@ -1,0 +1,85 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "LynxPrompt",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8512,
+  "id": "lynxprompt",
+  "tipi_version": 1,
+  "version": "2.0.75",
+  "categories": [
+    "development",
+    "ai"
+  ],
+  "description": "LynxPrompt is a self-hosted and federated platform for managing AI IDE/Tools configuration files. Generate, browse, store, and share AGENTS.md, CLAUDE.md, .cursorrules, and more through a modern WebUI. Features OAuth login, AI-powered generation, a CLI, VS Code extension, federation between instances, blog, and support forum.",
+  "short_desc": "Self-hosted platform for AI IDE rules and configuration blueprints.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/LynxPrompt",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "NextAuth Secret",
+      "env_variable": "NEXTAUTH_SECRET",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "random",
+      "label": "App DB Password",
+      "env_variable": "POSTGRES_APP_PASSWORD",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "random",
+      "label": "Users DB Password",
+      "env_variable": "POSTGRES_USERS_PASSWORD",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "random",
+      "label": "Blog DB Password",
+      "env_variable": "POSTGRES_BLOG_PASSWORD",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "random",
+      "label": "Support DB Password",
+      "env_variable": "POSTGRES_SUPPORT_PASSWORD",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "text",
+      "label": "GitHub OAuth Client ID",
+      "env_variable": "GITHUB_CLIENT_ID",
+      "required": false,
+      "default": ""
+    },
+    {
+      "type": "password",
+      "label": "GitHub OAuth Client Secret",
+      "env_variable": "GITHUB_CLIENT_SECRET",
+      "required": false,
+      "default": ""
+    },
+    {
+      "type": "email",
+      "label": "Superadmin Email",
+      "env_variable": "SUPERADMIN_EMAIL",
+      "required": false,
+      "default": ""
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "website": "https://lynxprompt.com"
+}

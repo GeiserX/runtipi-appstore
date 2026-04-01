@@ -1,0 +1,1 @@
+A full-featured Telegram bot for Paperless-NGX document management. Upload documents and photos, search your archive with full-text search, manage metadata (tags, correspondents, document types), review your inbox, and download files -- all within Telegram. Features duplicate detection, pagination, and health endpoint.

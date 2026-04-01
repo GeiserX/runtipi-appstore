@@ -1,0 +1,68 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Jellyfin Telegram Channel Sync",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8518,
+  "id": "jellyfin-telegram-sync",
+  "tipi_version": 1,
+  "version": "0.0.10",
+  "categories": [
+    "media",
+    "automation"
+  ],
+  "description": "Automatically sync Jellyfin user access with Telegram channel membership. When members leave your Telegram channel, their Jellyfin accounts are auto-disabled. Features configurable sync intervals and a threshold to prevent accidental mass-disabling.",
+  "short_desc": "Sync Jellyfin user access with Telegram channel membership.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/jellyfin-telegram-channel-sync",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Telegram API ID",
+      "env_variable": "TELEGRAM_API_ID",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Telegram API Hash",
+      "env_variable": "TELEGRAM_API_HASH",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Telegram Channel",
+      "env_variable": "TELEGRAM_CHANNEL",
+      "required": true,
+      "hint": "Username or channel ID"
+    },
+    {
+      "type": "text",
+      "label": "Jellyfin URL",
+      "env_variable": "JELLYFIN_URL",
+      "required": true,
+      "hint": "e.g. http://jellyfin:8096"
+    },
+    {
+      "type": "password",
+      "label": "Jellyfin API Key",
+      "env_variable": "JELLYFIN_API_KEY",
+      "required": true
+    },
+    {
+      "type": "number",
+      "label": "Sync Interval (seconds)",
+      "env_variable": "SCRIPT_INTERVAL",
+      "required": false,
+      "default": 3600
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "no_gui": true
+}

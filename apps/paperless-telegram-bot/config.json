@@ -1,0 +1,55 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Paperless Telegram Bot",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8515,
+  "id": "paperless-telegram-bot",
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": [
+    "automation",
+    "utilities"
+  ],
+  "description": "A full-featured Telegram bot for Paperless-NGX document management. Upload documents and photos, search your archive with full-text search, manage metadata (tags, correspondents, document types), review your inbox, and download files -- all within Telegram. Features duplicate detection, pagination, and health endpoint.",
+  "short_desc": "Manage Paperless-NGX documents entirely through Telegram.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/paperless-telegram-bot",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Telegram Bot Token",
+      "env_variable": "TELEGRAM_BOT_TOKEN",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Paperless URL",
+      "env_variable": "PAPERLESS_URL",
+      "required": true,
+      "hint": "e.g. http://paperless:8000"
+    },
+    {
+      "type": "text",
+      "label": "Paperless API Token",
+      "env_variable": "PAPERLESS_TOKEN",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Allowed Telegram User IDs",
+      "env_variable": "TELEGRAM_ALLOWED_USERS",
+      "required": false,
+      "hint": "Comma-separated user IDs"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1775057822856,
+  "updated_at": 1775057822856,
+  "min_tipi_version": "4.0.0",
+  "no_gui": true
+}

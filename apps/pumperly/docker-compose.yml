@@ -1,0 +1,82 @@
+services:
+  pumperly:
+    image: drumsergio/pumperly:v1.2.7
+    container_name: pumperly
+    restart: unless-stopped
+    depends_on:
+      pumperly-db:
+        condition: service_healthy
+    ports:
+      - ${APP_PORT}:3000
+    environment:
+      DATABASE_URL: postgresql://pumperly:${PUMPERLY_DB_PASSWORD}@pumperly-db:5432/pumperly
+      VALHALLA_URL: http://pumperly-valhalla:8002
+      PHOTON_URL: http://pumperly-photon:2322
+      NEXT_PUBLIC_APP_URL: ${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      NEXT_PUBLIC_DEFAULT_LOCALE: en
+      NEXT_PUBLIC_DEFAULT_FUEL_TYPE: E5
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.pumperly-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.pumperly.loadbalancer.server.port: 3000
+      traefik.http.routers.pumperly-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pumperly-insecure.entrypoints: web
+      traefik.http.routers.pumperly-insecure.service: pumperly
+      traefik.http.routers.pumperly-insecure.middlewares: pumperly-web-redirect
+      traefik.http.routers.pumperly.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pumperly.entrypoints: websecure
+      traefik.http.routers.pumperly.service: pumperly
+      traefik.http.routers.pumperly.tls.certresolver: myresolver
+      traefik.http.routers.pumperly-local-insecure.rule: Host(`pumperly.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pumperly-local-insecure.entrypoints: web
+      traefik.http.routers.pumperly-local-insecure.service: pumperly
+      traefik.http.routers.pumperly-local-insecure.middlewares: pumperly-web-redirect
+      traefik.http.routers.pumperly-local.rule: Host(`pumperly.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pumperly-local.entrypoints: websecure
+      traefik.http.routers.pumperly-local.service: pumperly
+      traefik.http.routers.pumperly-local.tls: true
+      runtipi.managed: true
+
+  pumperly-db:
+    image: postgis/postgis:17-3.5-alpine
+    container_name: pumperly-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pumperly
+      POSTGRES_USER: pumperly
+      POSTGRES_PASSWORD: ${PUMPERLY_DB_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    networks:
+      - tipi_main_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pumperly"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      runtipi.managed: true
+
+  pumperly-valhalla:
+    image: ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+    container_name: pumperly-valhalla
+    restart: unless-stopped
+    volumes:
+      - ${APP_DATA_DIR}/data/valhalla:/custom_files
+    networks:
+      - tipi_main_network
+    labels:
+      runtipi.managed: true
+
+  pumperly-photon:
+    image: komoot/photon:latest
+    container_name: pumperly-photon
+    restart: unless-stopped
+    volumes:
+      - ${APP_DATA_DIR}/data/photon:/photon/photon_data
+    networks:
+      - tipi_main_network
+    labels:
+      runtipi.managed: true

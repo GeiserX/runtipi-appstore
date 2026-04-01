@@ -1,0 +1,1 @@
+LynxPrompt is a self-hosted and federated platform for managing AI IDE/Tools configuration files. Generate, browse, store, and share AGENTS.md, CLAUDE.md, .cursorrules, and more through a modern WebUI. Features OAuth login, AI-powered generation, a CLI, VS Code extension, federation between instances, blog, and support forum.

@@ -1,0 +1,31 @@
+services:
+  telegram-slskd-bot:
+    image: drumsergio/telegram-slskd-local-bot:v0.8.2
+    container_name: telegram-slskd-bot
+    restart: unless-stopped
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_ALLOWED_USERS: ${TELEGRAM_ALLOWED_USERS:-}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+      SLSKD_HOST: ${SLSKD_HOST}
+      SLSKD_API_KEY: ${SLSKD_API_KEY}
+      DOWNLOAD_DIR: /downloads
+      OUTPUT_DIR: /music
+      AUTO_MODE: "false"
+      MAX_RESULTS: "5"
+      LOG_LEVEL: INFO
+    volumes:
+      - ${APP_DATA_DIR}/data/downloads:/downloads:ro
+      - ${APP_DATA_DIR}/data/music:/music
+    networks:
+      - tipi_main_network
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      runtipi.managed: true

@@ -1,0 +1,1 @@
+Automatically sync Jellyfin user access with Telegram channel membership. When members leave your Telegram channel, their Jellyfin accounts are auto-disabled. Features configurable sync intervals and a threshold to prevent accidental mass-disabling.

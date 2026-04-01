@@ -1,0 +1,1 @@
+Telegram Archive provides automated, incremental backups of your Telegram chats with a local web viewer that feels just like the real app. Supports SQLite and PostgreSQL, real-time message listening, media downloads, chat filtering, authentication, and public chat sharing. Docker-ready with security hardening.

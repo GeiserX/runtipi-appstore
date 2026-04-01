@@ -1,0 +1,1 @@
+Automatic video transcoding service for Jellyfin libraries. Transcodes media to 720p HEVC or AV1 with NVIDIA and Intel hardware acceleration support. Watches source folders and outputs optimized files. Configurable encoding quality, codec selection, and GPU support.

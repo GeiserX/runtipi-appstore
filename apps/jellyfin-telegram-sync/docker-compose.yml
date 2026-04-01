@@ -1,0 +1,19 @@
+services:
+  jellyfin-telegram-sync:
+    image: drumsergio/jellytelegram-sync:0.0.10
+    container_name: jellyfin-telegram-sync
+    restart: unless-stopped
+    environment:
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+      TELEGRAM_CHANNEL: ${TELEGRAM_CHANNEL}
+      THRESHOLD_ENTRIES: "100"
+      JELLYFIN_URL: ${JELLYFIN_URL}
+      JELLYFIN_API_KEY: ${JELLYFIN_API_KEY}
+      SCRIPT_INTERVAL: ${SCRIPT_INTERVAL:-3600}
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    networks:
+      - tipi_main_network
+    labels:
+      runtipi.managed: true

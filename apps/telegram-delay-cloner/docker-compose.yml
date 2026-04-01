@@ -1,0 +1,18 @@
+services:
+  telegram-delay-cloner:
+    image: drumsergio/telegram-delay-channel-cloner:0.0.1
+    container_name: telegram-delay-cloner
+    restart: unless-stopped
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      SOURCE_CHANNEL: ${SOURCE_CHANNEL}
+      TARGET_CHANNEL: ${TARGET_CHANNEL}
+      DELAY: ${DELAY:-60}
+      DB_LOCATION: /data/messages.db
+      POLLING: ${POLLING:-30}
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    networks:
+      - tipi_main_network
+    labels:
+      runtipi.managed: true
