@@ -31,7 +31,7 @@ Community app store for [Runtipi](https://runtipi.io/) with self-hosted applicat
 
 ## Requirements
 
-- Runtipi **v4.0.0** or later
+- Runtipi **v4.5.0** or later
 
 ## License
 
