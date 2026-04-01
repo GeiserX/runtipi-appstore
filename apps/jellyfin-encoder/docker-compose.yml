@@ -15,7 +15,6 @@ services:
       SOURCE_FOLDER: /app/source
       DEST_FOLDER: /app/destination
       ENCODING_CODEC: ${ENCODING_CODEC:-hevc}
-    networks:
-      - tipi_main_network
-    labels:
-      runtipi.managed: true
+
+x-runtipi:
+  schema_version: 2

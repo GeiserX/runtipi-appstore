@@ -21,8 +21,6 @@ services:
       LOG_LEVEL: INFO
     volumes:
       - ${APP_DATA_DIR}/data:/data
-    networks:
-      - tipi_main_network
     read_only: true
     tmpfs:
       - /tmp
@@ -30,15 +28,11 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    labels:
-      runtipi.managed: true
 
   telegram-viewer:
     image: drumsergio/telegram-archive-viewer:v7.4.2
     container_name: telegram-archive-viewer
     restart: unless-stopped
-    ports:
-      - ${APP_PORT}:8000
     environment:
       BACKUP_PATH: /data/backups
       VIEWER_USERNAME: ${VIEWER_USERNAME:-}
@@ -51,8 +45,6 @@ services:
       LOG_LEVEL: INFO
     volumes:
       - ${APP_DATA_DIR}/data:/data
-    networks:
-      - tipi_main_network
     read_only: true
     tmpfs:
       - /tmp
@@ -60,24 +52,9 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    labels:
-      traefik.enable: true
-      traefik.http.middlewares.telegram-archive-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.telegram-archive.loadbalancer.server.port: 8000
-      traefik.http.routers.telegram-archive-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.telegram-archive-insecure.entrypoints: web
-      traefik.http.routers.telegram-archive-insecure.service: telegram-archive
-      traefik.http.routers.telegram-archive-insecure.middlewares: telegram-archive-web-redirect
-      traefik.http.routers.telegram-archive.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.telegram-archive.entrypoints: websecure
-      traefik.http.routers.telegram-archive.service: telegram-archive
-      traefik.http.routers.telegram-archive.tls.certresolver: myresolver
-      traefik.http.routers.telegram-archive-local-insecure.rule: Host(`telegram-archive.${LOCAL_DOMAIN}`)
-      traefik.http.routers.telegram-archive-local-insecure.entrypoints: web
-      traefik.http.routers.telegram-archive-local-insecure.service: telegram-archive
-      traefik.http.routers.telegram-archive-local-insecure.middlewares: telegram-archive-web-redirect
-      traefik.http.routers.telegram-archive-local.rule: Host(`telegram-archive.${LOCAL_DOMAIN}`)
-      traefik.http.routers.telegram-archive-local.entrypoints: websecure
-      traefik.http.routers.telegram-archive-local.service: telegram-archive
-      traefik.http.routers.telegram-archive-local.tls: true
-      runtipi.managed: true
+    x-runtipi:
+      is_main: true
+      internal_port: 8000
+
+x-runtipi:
+  schema_version: 2

@@ -1,10 +1,8 @@
 services:
   nginx-mailer:
-    image: drumsergio/nginx-mailer:latest
+    image: drumsergio/nginx-mailer:1.0.0
     container_name: nginx-mailer
     restart: unless-stopped
-    ports:
-      - ${APP_PORT}:80
     volumes:
       - ${APP_DATA_DIR}/data/website:/usr/share/nginx/html:ro
     environment:
@@ -14,26 +12,9 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       SMTP_FROM: ${SMTP_FROM}
       CONTACT_EMAIL: ${CONTACT_EMAIL}
-    networks:
-      - tipi_main_network
-    labels:
-      traefik.enable: true
-      traefik.http.middlewares.nginx-mailer-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.nginx-mailer.loadbalancer.server.port: 80
-      traefik.http.routers.nginx-mailer-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.nginx-mailer-insecure.entrypoints: web
-      traefik.http.routers.nginx-mailer-insecure.service: nginx-mailer
-      traefik.http.routers.nginx-mailer-insecure.middlewares: nginx-mailer-web-redirect
-      traefik.http.routers.nginx-mailer.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.nginx-mailer.entrypoints: websecure
-      traefik.http.routers.nginx-mailer.service: nginx-mailer
-      traefik.http.routers.nginx-mailer.tls.certresolver: myresolver
-      traefik.http.routers.nginx-mailer-local-insecure.rule: Host(`nginx-mailer.${LOCAL_DOMAIN}`)
-      traefik.http.routers.nginx-mailer-local-insecure.entrypoints: web
-      traefik.http.routers.nginx-mailer-local-insecure.service: nginx-mailer
-      traefik.http.routers.nginx-mailer-local-insecure.middlewares: nginx-mailer-web-redirect
-      traefik.http.routers.nginx-mailer-local.rule: Host(`nginx-mailer.${LOCAL_DOMAIN}`)
-      traefik.http.routers.nginx-mailer-local.entrypoints: websecure
-      traefik.http.routers.nginx-mailer-local.service: nginx-mailer
-      traefik.http.routers.nginx-mailer-local.tls: true
-      runtipi.managed: true
+    x-runtipi:
+      is_main: true
+      internal_port: 80
+
+x-runtipi:
+  schema_version: 2

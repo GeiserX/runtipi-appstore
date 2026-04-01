@@ -16,41 +16,20 @@ services:
       GENIEACS_EXT_DIR: /opt/genieacs/ext
       GENIEACS_MONGODB_CONNECTION_URL: mongodb://genieacs-mongo/genieacs?authSource=admin
     ports:
-      - ${APP_PORT}:3000
       - "7547:7547"
       - "7557:7557"
       - "7567:7567"
     volumes:
       - ${APP_DATA_DIR}/data/ext:/opt/genieacs/ext
-    networks:
-      - tipi_main_network
     healthcheck:
       test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:3000"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
-    labels:
-      traefik.enable: true
-      traefik.http.middlewares.genieacs-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.genieacs.loadbalancer.server.port: 3000
-      traefik.http.routers.genieacs-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.genieacs-insecure.entrypoints: web
-      traefik.http.routers.genieacs-insecure.service: genieacs
-      traefik.http.routers.genieacs-insecure.middlewares: genieacs-web-redirect
-      traefik.http.routers.genieacs.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.genieacs.entrypoints: websecure
-      traefik.http.routers.genieacs.service: genieacs
-      traefik.http.routers.genieacs.tls.certresolver: myresolver
-      traefik.http.routers.genieacs-local-insecure.rule: Host(`genieacs.${LOCAL_DOMAIN}`)
-      traefik.http.routers.genieacs-local-insecure.entrypoints: web
-      traefik.http.routers.genieacs-local-insecure.service: genieacs
-      traefik.http.routers.genieacs-local-insecure.middlewares: genieacs-web-redirect
-      traefik.http.routers.genieacs-local.rule: Host(`genieacs.${LOCAL_DOMAIN}`)
-      traefik.http.routers.genieacs-local.entrypoints: websecure
-      traefik.http.routers.genieacs-local.service: genieacs
-      traefik.http.routers.genieacs-local.tls: true
-      runtipi.managed: true
+    x-runtipi:
+      is_main: true
+      internal_port: 3000
 
   genieacs-mongo:
     image: mongo:8.0
@@ -61,13 +40,12 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/db:/data/db
       - ${APP_DATA_DIR}/data/configdb:/data/configdb
-    networks:
-      - tipi_main_network
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 40s
-    labels:
-      runtipi.managed: true
+
+x-runtipi:
+  schema_version: 2

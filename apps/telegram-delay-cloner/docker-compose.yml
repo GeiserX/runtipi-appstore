@@ -12,7 +12,6 @@ services:
       POLLING: ${POLLING:-30}
     volumes:
       - ${APP_DATA_DIR}/data:/data
-    networks:
-      - tipi_main_network
-    labels:
-      runtipi.managed: true
+
+x-runtipi:
+  schema_version: 2

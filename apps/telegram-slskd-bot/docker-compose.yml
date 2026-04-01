@@ -18,8 +18,6 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/downloads:/downloads:ro
       - ${APP_DATA_DIR}/data/music:/music
-    networks:
-      - tipi_main_network
     read_only: true
     tmpfs:
       - /tmp
@@ -27,5 +25,6 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    labels:
-      runtipi.managed: true
+
+x-runtipi:
+  schema_version: 2

@@ -5,10 +5,6 @@ services:
     restart: unless-stopped
     volumes:
       - ${APP_DATA_DIR}/data/website:/usr/share/nginx/html:ro
-    networks:
-      - tipi_main_network
-    labels:
-      runtipi.managed: true
 
   way-cms-admin:
     image: drumsergio/way-cms:2.0.22
@@ -16,8 +12,6 @@ services:
     restart: unless-stopped
     depends_on:
       - way-cms-website
-    ports:
-      - ${APP_PORT}:5000
     volumes:
       - ${APP_DATA_DIR}/data/website:/var/www/html:rw
       - ${APP_DATA_DIR}/data/backups:/.way-cms-backups:rw
@@ -31,26 +25,9 @@ services:
       AUTO_BACKUP_ENABLED: "true"
       PORT: "5000"
       FLASK_APP: app.py
-    networks:
-      - tipi_main_network
-    labels:
-      traefik.enable: true
-      traefik.http.middlewares.way-cms-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.way-cms.loadbalancer.server.port: 5000
-      traefik.http.routers.way-cms-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.way-cms-insecure.entrypoints: web
-      traefik.http.routers.way-cms-insecure.service: way-cms
-      traefik.http.routers.way-cms-insecure.middlewares: way-cms-web-redirect
-      traefik.http.routers.way-cms.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.way-cms.entrypoints: websecure
-      traefik.http.routers.way-cms.service: way-cms
-      traefik.http.routers.way-cms.tls.certresolver: myresolver
-      traefik.http.routers.way-cms-local-insecure.rule: Host(`way-cms.${LOCAL_DOMAIN}`)
-      traefik.http.routers.way-cms-local-insecure.entrypoints: web
-      traefik.http.routers.way-cms-local-insecure.service: way-cms
-      traefik.http.routers.way-cms-local-insecure.middlewares: way-cms-web-redirect
-      traefik.http.routers.way-cms-local.rule: Host(`way-cms.${LOCAL_DOMAIN}`)
-      traefik.http.routers.way-cms-local.entrypoints: websecure
-      traefik.http.routers.way-cms-local.service: way-cms
-      traefik.http.routers.way-cms-local.tls: true
-      runtipi.managed: true
+    x-runtipi:
+      is_main: true
+      internal_port: 5000
+
+x-runtipi:
+  schema_version: 2

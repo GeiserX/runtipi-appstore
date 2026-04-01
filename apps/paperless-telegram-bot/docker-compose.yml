@@ -1,6 +1,6 @@
 services:
   paperless-telegram-bot:
-    image: drumsergio/paperless-telegram-bot:latest
+    image: drumsergio/paperless-telegram-bot:v0.6.1
     container_name: paperless-telegram-bot
     restart: unless-stopped
     environment:
@@ -8,12 +8,11 @@ services:
       PAPERLESS_URL: ${PAPERLESS_URL}
       PAPERLESS_TOKEN: ${PAPERLESS_TOKEN}
       TELEGRAM_ALLOWED_USERS: ${TELEGRAM_ALLOWED_USERS:-}
-    networks:
-      - tipi_main_network
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
       interval: 30s
       timeout: 5s
       retries: 3
-    labels:
-      runtipi.managed: true
+
+x-runtipi:
+  schema_version: 2

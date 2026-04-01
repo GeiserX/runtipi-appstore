@@ -3,8 +3,6 @@ services:
     image: drumsergio/cashpilot:0.2
     container_name: cashpilot-ui
     restart: unless-stopped
-    ports:
-      - ${APP_PORT}:8080
     volumes:
       - ${APP_DATA_DIR}/data/ui:/data
       - ${APP_DATA_DIR}/data/fleet:/fleet
@@ -14,31 +12,11 @@ services:
       CASHPILOT_API_KEY: ${CASHPILOT_API_KEY}
       CASHPILOT_ADMIN_API_KEY: ${CASHPILOT_ADMIN_API_KEY}
     init: true
-    networks:
-      - tipi_main_network
     security_opt:
       - no-new-privileges:true
-    labels:
-      traefik.enable: true
-      traefik.http.middlewares.cashpilot-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.cashpilot.loadbalancer.server.port: 8080
-      traefik.http.routers.cashpilot-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.cashpilot-insecure.entrypoints: web
-      traefik.http.routers.cashpilot-insecure.service: cashpilot
-      traefik.http.routers.cashpilot-insecure.middlewares: cashpilot-web-redirect
-      traefik.http.routers.cashpilot.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.cashpilot.entrypoints: websecure
-      traefik.http.routers.cashpilot.service: cashpilot
-      traefik.http.routers.cashpilot.tls.certresolver: myresolver
-      traefik.http.routers.cashpilot-local-insecure.rule: Host(`cashpilot.${LOCAL_DOMAIN}`)
-      traefik.http.routers.cashpilot-local-insecure.entrypoints: web
-      traefik.http.routers.cashpilot-local-insecure.service: cashpilot
-      traefik.http.routers.cashpilot-local-insecure.middlewares: cashpilot-web-redirect
-      traefik.http.routers.cashpilot-local.rule: Host(`cashpilot.${LOCAL_DOMAIN}`)
-      traefik.http.routers.cashpilot-local.entrypoints: websecure
-      traefik.http.routers.cashpilot-local.service: cashpilot
-      traefik.http.routers.cashpilot-local.tls: true
-      runtipi.managed: true
+    x-runtipi:
+      is_main: true
+      internal_port: 8080
 
   cashpilot-worker:
     image: drumsergio/cashpilot-worker:0.2
@@ -54,9 +32,8 @@ services:
       CASHPILOT_API_KEY: ${CASHPILOT_API_KEY}
       CASHPILOT_WORKER_NAME: local
     init: true
-    networks:
-      - tipi_main_network
     security_opt:
       - no-new-privileges:true
-    labels:
-      runtipi.managed: true
+
+x-runtipi:
+  schema_version: 2

@@ -31,7 +31,7 @@
     "amd64"
   ],
   "created_at": 1775057822856,
-  "updated_at": 1775057822856,
-  "min_tipi_version": "4.0.0",
+  "updated_at": 1775059351054,
+  "min_tipi_version": "4.5.0",
   "no_gui": true
 }

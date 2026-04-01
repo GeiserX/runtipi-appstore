@@ -3,28 +3,9 @@ services:
     image: drumsergio/epublangmerger:1.0.1
     container_name: epublangmerger
     restart: unless-stopped
-    ports:
-      - ${APP_PORT}:3838
-    networks:
-      - tipi_main_network
-    labels:
-      traefik.enable: true
-      traefik.http.middlewares.epublangmerger-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.epublangmerger.loadbalancer.server.port: 3838
-      traefik.http.routers.epublangmerger-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.epublangmerger-insecure.entrypoints: web
-      traefik.http.routers.epublangmerger-insecure.service: epublangmerger
-      traefik.http.routers.epublangmerger-insecure.middlewares: epublangmerger-web-redirect
-      traefik.http.routers.epublangmerger.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.epublangmerger.entrypoints: websecure
-      traefik.http.routers.epublangmerger.service: epublangmerger
-      traefik.http.routers.epublangmerger.tls.certresolver: myresolver
-      traefik.http.routers.epublangmerger-local-insecure.rule: Host(`epublangmerger.${LOCAL_DOMAIN}`)
-      traefik.http.routers.epublangmerger-local-insecure.entrypoints: web
-      traefik.http.routers.epublangmerger-local-insecure.service: epublangmerger
-      traefik.http.routers.epublangmerger-local-insecure.middlewares: epublangmerger-web-redirect
-      traefik.http.routers.epublangmerger-local.rule: Host(`epublangmerger.${LOCAL_DOMAIN}`)
-      traefik.http.routers.epublangmerger-local.entrypoints: websecure
-      traefik.http.routers.epublangmerger-local.service: epublangmerger
-      traefik.http.routers.epublangmerger-local.tls: true
-      runtipi.managed: true
+    x-runtipi:
+      is_main: true
+      internal_port: 3838
+
+x-runtipi:
+  schema_version: 2
