@@ -14,7 +14,7 @@
   "description": "GenieACS is the most popular open-source TR-069 (CWMP) auto-configuration server. Manage routers, ONTs, and IoT devices remotely: firmware upgrades, configuration changes, monitoring, and diagnostics. Includes a modern web UI, NBI API, and MongoDB backend. The original and most popular container image with 270K+ Docker pulls.",
   "short_desc": "Open-source TR-069 remote management platform for CPE devices.",
   "author": "GeiserX",
-  "source": "https://github.com/GeiserX/genieacs-docker",
+  "source": "https://github.com/GeiserX/genieacs-container",
   "form_fields": [
     {
       "type": "random",

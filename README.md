@@ -14,7 +14,7 @@ Community app store for [Runtipi](https://runtipi.io/) with self-hosted applicat
 | App | Description | Category |
 |-----|-------------|----------|
 | [Telegram Archive](https://github.com/GeiserX/Telegram-Archive) | Automated Telegram backups with web viewer | Social, Utilities |
-| [GenieACS](https://github.com/GeiserX/genieacs-docker) | TR-069 remote management for CPE devices | Network |
+| [GenieACS](https://github.com/GeiserX/genieacs-container) | TR-069 remote management for CPE devices | Network |
 | [LynxPrompt](https://github.com/GeiserX/LynxPrompt) | AI IDE rules and configuration platform | Development, AI |
 | [Pumperly](https://github.com/GeiserX/Pumperly) | Fuel and EV route planner with real-time prices | Utilities, Data |
 | [CashPilot](https://github.com/GeiserX/CashPilot) | Passive income platform with fleet management | Finance |

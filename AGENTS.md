@@ -34,7 +34,7 @@ apps/
 | App ID | Source Repo | Web UI |
 |--------|-------------|--------|
 | telegram-archive | Telegram-Archive | Yes (port 8000) |
-| genieacs | genieacs-docker | Yes (port 3000) |
+| genieacs | genieacs-container | Yes (port 3000) |
 | lynxprompt | LynxPrompt | Yes (port 3000) |
 | pumperly | Pumperly | Yes (port 3000) |
 | cashpilot | CashPilot | Yes (port 8080) |
