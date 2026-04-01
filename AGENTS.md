@@ -12,7 +12,7 @@ Community [Runtipi](https://runtipi.io/) app store containing 15 self-hosted Doc
 apps/
   <app-id>/
     config.json          # App metadata, form fields, categories
-    docker-compose.yml   # Docker Compose with Traefik labels
+    docker-compose.yml   # Docker Compose with x-runtipi extensions
     metadata/
       description.md     # Long description for Runtipi UI
       logo.jpg           # 512x512 square logo
@@ -23,18 +23,22 @@ apps/
 
 - Each app folder name MUST match the `id` field in its `config.json`
 - Docker images are from Docker Hub (`drumsergio/*`)
-- All compose files use Runtipi template variables: `${APP_DATA_DIR}`, `${APP_PORT}`, `${APP_DOMAIN}`, `${TZ}`, `${LOCAL_DOMAIN}`, `${APP_PROTOCOL}`
-- Traefik labels follow the Runtipi pattern (insecure redirect + websecure + local domain)
+- All compose files use `x-runtipi` dynamic compose format (schema_version 2)
+- Web UI apps declare `x-runtipi: is_main: true` + `internal_port` on the main service
+- Headless apps omit `is_main` and set `no_gui: true` in config.json
+- Runtipi handles Traefik routing and networking from `x-runtipi` metadata — no manual labels
+- Template variables: `${APP_DATA_DIR}`, `${APP_PORT}`, `${APP_DOMAIN}`, `${TZ}`, `${APP_PROTOCOL}`
 - Form fields generate environment variables referenced in compose
 - Logos are 512x512 JPEG, 1:1 aspect ratio
-- `min_tipi_version` is set to `4.0.0`
+- All image tags are pinned to specific versions (no `:latest`)
+- `min_tipi_version` is set to `4.5.0` (required for x-runtipi YAML support)
 
 ## Apps Included
 
 | App ID | Source Repo | Web UI |
 |--------|-------------|--------|
 | telegram-archive | Telegram-Archive | Yes (port 8000) |
-| genieacs | genieacs-container | Yes (port 3000) |
+| genieacs | genieacs-docker | Yes (port 3000) |
 | lynxprompt | LynxPrompt | Yes (port 3000) |
 | pumperly | Pumperly | Yes (port 3000) |
 | cashpilot | CashPilot | Yes (port 8080) |
@@ -53,7 +57,7 @@ apps/
 
 1. Create `apps/<id>/` directory
 2. Add `config.json` following `app-info-schema.json`
-3. Add `docker-compose.yml` with Traefik labels and `runtipi.managed: true`
+3. Add `docker-compose.yml` with `x-runtipi: schema_version: 2` top-level and `is_main`/`internal_port` on main service
 4. Add `metadata/description.md` and `metadata/logo.jpg`
 5. Ensure `id` matches folder name
 6. Test with Runtipi before committing
