@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/banner.svg" alt="GeiserX Runtipi App Store banner" width="900"/>
+</p>
+
 # GeiserX Runtipi App Store
 
 Community app store for [Runtipi](https://runtipi.io/) with self-hosted applications by [GeiserX](https://github.com/GeiserX).
