@@ -26,7 +26,7 @@ Community app store for [Runtipi](https://runtipi.io/) with self-hosted applicat
 | [Telegram Soulseek Bot](https://github.com/GeiserX/telegram-slskd-local-bot) | Music discovery and FLAC downloads via Telegram | Media, Music |
 | [Telegram Delay Cloner](https://github.com/GeiserX/telegram-delay-channel-cloner) | Relay messages between channels with delay | Social, Automation |
 | [Jellyfin Telegram Sync](https://github.com/GeiserX/jellyfin-telegram-channel-sync) | Sync Jellyfin access with Telegram membership | Media, Automation |
-| [Jellyfin Encoder](https://github.com/GeiserX/jellyfin-encoder) | HEVC/AV1 transcoding with hardware acceleration | Media |
+| [Quality Gate Encoder](https://github.com/GeiserX/quality-gate-encoder) (formerly Jellyfin Encoder) | HEVC/AV1 transcoding for Jellyfin with hardware acceleration | Media |
 | [Audio Transcode Watcher](https://github.com/GeiserX/audio-transcode-watcher) | Multi-format audio transcoding with file watching | Media, Music |
 | [Nginx Mailer](https://github.com/GeiserX/nginx-mailer) | nginx + contact form API with SMTP | Utilities, Network |
 | [Way-CMS](https://github.com/GeiserX/Way-CMS) | Web CMS for archived websites | Development, Utilities |
