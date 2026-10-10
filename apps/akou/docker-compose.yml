@@ -1,0 +1,22 @@
+services:
+  akou:
+    image: drumsergio/akou:1.0.0
+    container_name: akou
+    restart: unless-stopped
+    # The image runs as uid 1000 and stops when /data or /models is not
+    # writable; the app-data folders Runtipi creates belong to root.
+    user: "0:0"
+    environment:
+      # akou has no TLS of its own and refuses a network bind without this;
+      # Runtipi's Traefik sits in front of it.
+      AKOU_BEHIND_PROXY: "true"
+      TZ: ${TZ}
+    volumes:
+      - ${APP_DATA_DIR}/data/data:/data
+      - ${APP_DATA_DIR}/data/models:/models
+    x-runtipi:
+      is_main: true
+      internal_port: 8476
+
+x-runtipi:
+  schema_version: 2
