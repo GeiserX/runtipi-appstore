@@ -4,9 +4,9 @@ The default `fast` preset runs NVIDIA Parakeet TDT 0.6B v3 on the CPU, with Nemo
 
 ## First use
 
-1. Set the web page's admin password from a shell on the Runtipi host, at least 12 characters:
+1. Set the web page's admin password from a shell on the Runtipi host, at least 12 characters. This reads it without echoing it or leaving it in the shell history:
 
-   `printf '%s' 'your-password' | docker exec -i akou akou admin set-password`
+   `read -rs P && printf '%s' "$P" | docker exec -i akou akou admin set-password; unset P`
 
 2. Open akou, log in, and create one API key per program on the Keys page. A key is shown once; give it to the program as its bearer token.
 
