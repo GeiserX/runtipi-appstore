@@ -6,7 +6,7 @@
 
 <p><a href="LICENSE"><img src="https://img.shields.io/github/license/GeiserX/runtipi-appstore?style=flat-square" alt="License"></a></p>
 
-Community app store for [Runtipi](https://runtipi.io/) with 15 self-hosted applications by [GeiserX](https://github.com/GeiserX).
+Community app store for [Runtipi](https://runtipi.io/) with 16 self-hosted applications by [GeiserX](https://github.com/GeiserX).
 
 ## Quick start
 
@@ -36,6 +36,7 @@ Needs Runtipi 4.5.0 or later.
 | [Way-CMS](https://github.com/GeiserX/Way-CMS) | Web CMS for archived websites | Development, Utilities |
 | [ePub Language Merger](https://github.com/GeiserX/ePubLangMerger) | Bilingual ePub merger for parallel reading | Books |
 | [Duplicacy Exporter](https://github.com/GeiserX/duplicacy-exporter) | Prometheus exporter for Duplicacy backups | Utilities, Data |
+| [akou](https://github.com/GeiserX/akou) | Self-hosted transcription server with an OpenAI-compatible API | AI, Utilities |
 
 ## License
 
