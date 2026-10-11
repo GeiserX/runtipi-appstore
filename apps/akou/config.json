@@ -1,0 +1,28 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "akou",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8525,
+  "id": "akou",
+  "tipi_version": 1,
+  "version": "1.0.0",
+  "categories": [
+    "ai",
+    "utilities"
+  ],
+  "description": "akou turns audio into text on your own server. A program uploads a file and reads back the text with word and segment times and speaker labels, as JSON, SRT or VTT, by long-poll, an event feed or a signed webhook. It also answers the OpenAI transcription endpoint. A web page shows the job queue, the API keys, the models and the settings. It is the server mode of akou, a call recorder for macOS, with the same core.",
+  "short_desc": "Self-hosted transcription server with speaker labels and an OpenAI-compatible API.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/akou",
+  "form_fields": [],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1791676800000,
+  "updated_at": 1791676800000,
+  "min_tipi_version": "4.5.0",
+  "website": "https://geiserx.github.io/akou/server/"
+}
