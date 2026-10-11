@@ -4,8 +4,16 @@ services:
     container_name: akou
     restart: unless-stopped
     # The image runs as uid 1000 and stops when /data or /models is not
-    # writable; the app-data folders Runtipi creates belong to root.
+    # writable, and the app-data folders Runtipi creates belong to root. So
+    # it starts as root only to hand the two folders to uid 1000, then drops
+    # to that user before akou starts. A separate one-shot service would do
+    # the same, but Runtipi shows an app as stopped while any of its
+    # containers has exited.
     user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - chown 1000:1000 /data /models && exec setpriv --reuid=1000 --regid=1000 --clear-groups env HOME=/home/bun akou serve
     environment:
       # akou has no TLS of its own and refuses a network bind without this;
       # Runtipi's Traefik sits in front of it.
