@@ -1,0 +1,85 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "vettarr",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8526,
+  "id": "vettarr",
+  "tipi_version": 1,
+  "version": "1.0.0",
+  "categories": [
+    "media",
+    "automation"
+  ],
+  "description": "vettarr takes a link, a Telegram post, a magnet, a .torrent file or a Seerr request, looks the title up and checks it against rules you write: certification, IMDb parents guide, TMDB genres and keywords, size, seeders, what your library already has. Then it approves it, holds it for you or refuses it, and keeps the reasons. Approved items go to qBittorrent, Radarr, Sonarr or back to Seerr. Shadow mode decides without acting, so you can watch it first. A web UI that works from a phone, plus a Telegram bot.",
+  "short_desc": "Checks every film, series or book against your rules before it downloads.",
+  "author": "GeiserX",
+  "source": "https://github.com/GeiserX/vettarr",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Database password",
+      "env_variable": "VETTARR_DB_PASSWORD",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "password",
+      "label": "Web password hash",
+      "env_variable": "WEB_PASSWORD_HASH",
+      "hint": "The line 'vettarr web hash-password' prints. config.yaml reads it as ${WEB_PASSWORD_HASH} under web.auth.",
+      "required": false
+    },
+    {
+      "type": "text",
+      "label": "Telegram API id",
+      "env_variable": "TELEGRAM_API_ID",
+      "hint": "From my.telegram.org, for a userbot source. config.yaml reads it as ${TELEGRAM_API_ID}.",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "Telegram API hash",
+      "env_variable": "TELEGRAM_API_HASH",
+      "hint": "From my.telegram.org, for a userbot source. config.yaml reads it as ${TELEGRAM_API_HASH}.",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "Telegram bot token",
+      "env_variable": "TELEGRAM_BOT_TOKEN",
+      "hint": "config.yaml reads it as ${TELEGRAM_BOT_TOKEN}.",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "TMDB API key",
+      "env_variable": "TMDB_API_KEY",
+      "hint": "config.yaml reads it as ${TMDB_API_KEY}.",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "Prowlarr API key",
+      "env_variable": "PROWLARR_API_KEY",
+      "hint": "config.yaml reads it as ${PROWLARR_API_KEY}.",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "qBittorrent password",
+      "env_variable": "QBITTORRENT_PASSWORD",
+      "hint": "config.yaml reads it as ${QBITTORRENT_PASSWORD}.",
+      "required": false
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1791932072000,
+  "updated_at": 1791932072000,
+  "min_tipi_version": "4.5.0",
+  "website": "https://github.com/GeiserX/vettarr"
+}
