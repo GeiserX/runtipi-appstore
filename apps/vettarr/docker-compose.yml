@@ -1,0 +1,62 @@
+services:
+  vettarr:
+    image: drumsergio/vettarr:1.0.0
+    container_name: vettarr
+    restart: unless-stopped
+    # Longer than the 30 seconds the app gives its components to stop.
+    stop_grace_period: 40s
+    # With no config.yaml the app boots from environment variables alone and
+    # stops on the first one missing. So the first start copies the example
+    # the image ships, which runs the web UI and the policy in shadow mode
+    # and nothing else. The file is never overwritten after that.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - "[ -f /data/config.yaml ] || cp /app/config.example.yaml /data/config.yaml; exec python -m vettarr"
+    depends_on:
+      vettarr-db:
+        condition: service_healthy
+    environment:
+      CONFIG_PATH: /data/config.yaml
+      POSTGRES_HOST: vettarr-db
+      POSTGRES_USER: vettarr
+      POSTGRES_DB: vettarr
+      POSTGRES_PASSWORD: ${VETTARR_DB_PASSWORD}
+      TZ: ${TZ}
+      # Secrets config.yaml can name as ${VAR}. Empty is fine until a block
+      # that names one is enabled.
+      WEB_PASSWORD_HASH: ${WEB_PASSWORD_HASH:-}
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID:-}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TMDB_API_KEY: ${TMDB_API_KEY:-}
+      PROWLARR_API_KEY: ${PROWLARR_API_KEY:-}
+      QBITTORRENT_PASSWORD: ${QBITTORRENT_PASSWORD:-}
+    volumes:
+      # The image declares the two subfolders as volumes; mounting them by
+      # path keeps them out of anonymous volumes.
+      - ${APP_DATA_DIR}/data/app:/data
+      - ${APP_DATA_DIR}/data/app/sessions:/data/sessions
+      - ${APP_DATA_DIR}/data/app/torrents:/data/torrents
+    x-runtipi:
+      is_main: true
+      internal_port: 4850
+
+  vettarr-db:
+    image: postgres:18-alpine
+    container_name: vettarr-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: vettarr
+      POSTGRES_DB: vettarr
+      POSTGRES_PASSWORD: ${VETTARR_DB_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vettarr -d vettarr"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+x-runtipi:
+  schema_version: 2

@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-Community [Runtipi](https://runtipi.io/) app store containing 15 self-hosted Docker applications by [GeiserX](https://github.com/GeiserX). Users add this store to their Runtipi instance via Settings > App Stores.
+Community [Runtipi](https://runtipi.io/) app store containing 17 self-hosted Docker applications by [GeiserX](https://github.com/GeiserX). Users add this store to their Runtipi instance via Settings > App Stores.
 
 ## Architecture
 
@@ -52,6 +52,8 @@ apps/
 | way-cms | Way-CMS | Yes (port 5000) |
 | epublangmerger | ePubLangMerger | Yes (port 3838) |
 | duplicacy-exporter | duplicacy-exporter | No (Prometheus metrics on 9750) |
+| akou | akou | Yes (port 8476) |
+| vettarr | vettarr | Yes (port 4850) |
 
 ## Adding a New App
 
