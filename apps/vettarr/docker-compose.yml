@@ -1,6 +1,6 @@
 services:
   vettarr:
-    image: drumsergio/vettarr:1.0.0
+    image: drumsergio/vettarr:1.0.2
     container_name: vettarr
     restart: unless-stopped
     # Longer than the 30 seconds the app gives its components to stop.
