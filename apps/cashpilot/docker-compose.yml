@@ -1,6 +1,6 @@
 services:
   cashpilot-ui:
-    image: drumsergio/cashpilot:0.2
+    image: drumsergio/cashpilot:1.42.0
     container_name: cashpilot-ui
     restart: unless-stopped
     volumes:
@@ -14,16 +14,25 @@ services:
     init: true
     security_opt:
       - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64M
     x-runtipi:
       is_main: true
       internal_port: 8080
 
   cashpilot-worker:
-    image: drumsergio/cashpilot-worker:0.2
+    image: drumsergio/cashpilot-worker:1.42.0
     container_name: cashpilot-worker
     restart: unless-stopped
+    depends_on:
+      - cashpilot-ui
     volumes:
+      # The worker starts and stops the earning containers through the
+      # Docker socket, which is root on the host.
       - /var/run/docker.sock:/var/run/docker.sock
+      # Separate from the UI's /data on purpose: that one holds the
+      # credential store and its key, which the worker must not read.
+      # /fleet is shared because it holds the enrolment key both sides need.
       - ${APP_DATA_DIR}/data/worker:/data
       - ${APP_DATA_DIR}/data/fleet:/fleet
     environment:
@@ -31,9 +40,12 @@ services:
       CASHPILOT_UI_URL: http://cashpilot-ui:8080
       CASHPILOT_API_KEY: ${CASHPILOT_API_KEY}
       CASHPILOT_WORKER_NAME: local
+      CASHPILOT_CONTAINER_NETWORK: ${CASHPILOT_CONTAINER_NETWORK:-}
     init: true
     security_opt:
       - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64M
 
 x-runtipi:
   schema_version: 2
