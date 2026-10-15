@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "port": 8514,
   "id": "cashpilot",
-  "tipi_version": 1,
-  "version": "0.2",
+  "tipi_version": 2,
+  "version": "1.42.0",
   "categories": [
     "finance"
   ],
@@ -36,6 +36,13 @@
       "env_variable": "CASHPILOT_ADMIN_API_KEY",
       "min": 32,
       "max": 32
+    },
+    {
+      "type": "text",
+      "label": "Container network",
+      "hint": "Optional. Name of a Docker bridge network you created for the earning containers, so host firewall rules can isolate them. Leave empty to use the default bridge.",
+      "required": false,
+      "env_variable": "CASHPILOT_CONTAINER_NETWORK"
     }
   ],
   "supported_architectures": [
@@ -43,6 +50,6 @@
     "amd64"
   ],
   "created_at": 1775057822856,
-  "updated_at": 1775059351054,
+  "updated_at": 1792097453921,
   "min_tipi_version": "4.5.0"
 }
